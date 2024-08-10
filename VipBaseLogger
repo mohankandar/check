@@ -1,6 +1,6 @@
-package gov.va.bip.framework.log;
+package vip.framework.log;
 
-import gov.va.bip.framework.shared.sanitize.Sanitizer;
+import vip.framework.shared.sanitize.Sanitizer;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 import org.slf4j.Marker;
@@ -54,7 +54,7 @@ public class VipBaseLogger {
      *
      * @param logger org.slf4j.Logger
      */
-    protected BipBaseLogger(final org.slf4j.Logger logger) {
+    protected VipBaseLogger(final org.slf4j.Logger logger) {
         if (logger == null) {
             throw new IllegalArgumentException("Logger cannot be null");
         }

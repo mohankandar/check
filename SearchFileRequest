@@ -1,0 +1,128 @@
+type: object
+title: Search Files Request
+description: Request containing search filters, sorting information, and paging information. The filter block is required, but the individual filters are optional.
+properties:
+  pageRequest:
+    $ref: './pageRequest.yml'
+  filters:
+    schema:
+    '$ref': '#/components/schemas/Filters'
+  sorts:
+    schema:
+    '$ref': '#/components/schemas/Sorts'
+required:
+  - pageRequest
+  - filters
+"components": {
+  "schemas": {
+    "Sorts": {
+      "type": array,
+      "items": {
+        $ref: './sorts.yml'
+      }
+    },
+    "Filters": {
+      "properties": {
+        "providerData.documentTypeId": {
+          $ref: './filters.yml#/components/documentTypeIdFilter'
+        },
+        "providerData.documentCategoryId": {
+          $ref: './filters.yml#/components/documentCategoryIdFilter'
+        },
+        "providerData.subject": {
+          $ref: './filters.yml#/components/subjectFilter'
+        },
+        "systemData.contentName": {
+          $ref: './filters.yml#/components/contentNameFilter'
+        },
+        "providerData.contentSource": {
+          $ref: './filters.yml#/components/contentSourceFilter'
+        },
+        "providerData.dateVaReceivedDocument": {
+          $ref: './filters.yml#/components/dateVaReceivedDocumentFilter'
+        },
+        "providerData.endProductCode": {
+          $ref: './filters.yml#/components/endProductCodeFilter'
+        },
+        "providerData.associatedClaimId": {
+          $ref: './filters.yml#/components/associatedClaimId'
+        },
+        "providerData.associationDateTime": {
+          $ref: './filters.yml#/components/associationDateTimeFilter'
+        },
+        "systemData.uploadedDateTime": {
+          # same filter is used as the associationDateTime as filters would be identical
+          $ref: './filters.yml#/components/associationDateTimeFilter'
+        },
+        "systemData.mimeType": {
+          $ref: './filters.yml#/components/mimeTypeFilter'
+        },
+        "systemData.uploadSource": {
+          $ref: './filters.yml#/components/uploadSourceFilter'
+        },
+        "providerData.claimantFirstName": {
+          $ref: './filters.yml#/components/claimantFirstNameFilter'
+        },
+        "providerData.claimantLastName": {
+          $ref: './filters.yml#/components/claimantLastNameFilter'
+        },
+        "providerData.claimantMiddleInitial": {
+          $ref: './filters.yml#/components/claimantMiddleInitialFilter'
+        },
+        "providerData.claimantSsn": {
+          $ref: './filters.yml#/components/claimantSsnFilter'
+        },
+        "providerData.claimantDateOfBirth": {
+          $ref: './filters.yml#/components/claimantDateOfBirthFilter'
+        },
+        "providerData.benefitTypeId": {
+          $ref: './filters.yml#/components/benefitTypeIdFilter'
+        },
+        "rawTextData.ocrPerspective": {
+          $ref: './filters.yml#/components/ocrPerspectiveFilter'
+        },
+        "providerData.payeeCode": {
+          $ref: './filters.yml#/components/payeeCodeFilter'
+        },
+        "providerData.regionalProcessingOffice": {
+          $ref: './filters.yml#/components/regionalProcessingOfficeFilter'
+        },
+        "providerData.facilityCode": {
+          $ref: './filters.yml#/components/facilityCodeFilter'
+        },
+        "providerData.claimantParticipantId": {
+          $ref: './filters.yml#/components/claimantParticipantIdFilter'
+        },
+        "providerData.lineOfBusinessId": {
+          $ref: './filters.yml#/components/lineOfBusinessIdFilter'
+        },
+        "providerData.duplicateInformation.groupId": {
+          $ref: './filters.yml#/components/duplicateGroupIdFilter'
+        },
+        "providerData.textSearchable": {
+          $ref: './filters.yml#/components/textSearchableFilter'
+        },
+        "providerData.hasAnnotations": {
+          $ref: './filters.yml#/components/hasAnnotationsFilter'
+        },
+        "providerData.annotationType": {
+          $ref: './filters.yml#/components/annotationTypeFilter'
+        },
+        "providerData.annotationKeyword": {
+          $ref: './filters.yml#/components/annotationKeywordFilter'
+        },
+        "providerData.hasNotes": {
+          $ref: './filters.yml#/components/hasNotesFilter'
+        },
+        "providerData.ocrStatus": {
+          $ref: './filters.yml#/components/ocrStatusFilter'
+        },
+        "textContent": {
+          $ref: './filters.yml#/components/textContentFilter'
+        }
+      }
+    }
+  }
+}
+
+

@@ -1,0 +1,8 @@
+type: object
+title: Current Version Response
+description: Response data containing the system and provider data for a file. This will always be a response containing the latest information for the file.
+properties:
+  systemData:
+    $ref: './systemDataComposition.yml'
+  providerData:
+    $ref: './providerData.yml'

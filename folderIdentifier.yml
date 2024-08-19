@@ -1,0 +1,15 @@
+type: object
+title: Folder Identifier
+description: Details on the owner associated to the file.
+properties:
+  type:
+    type: string
+    enum:
+      - VETERAN
+      - PARTICIPANT
+      - ORGANIZATION
+      - BIN
+      - ANY
+      - UNSUPPORTED
+  id:
+    type: string

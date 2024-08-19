@@ -1,0 +1,11 @@
+type: object
+title: UuidExchangeResponse
+properties:
+  exchangeUuids:
+    type: object
+    additionalProperties:
+      type: string
+      format: uuid
+    description: A map where the key is the document ID (version UUID) and the value is the UUID.
+required:
+  - exchangeUuids

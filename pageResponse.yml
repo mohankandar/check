@@ -1,0 +1,16 @@
+type: object
+title: Page Response
+description: Information on paging of results.
+properties:
+  totalPages:
+    type: integer
+    format: int32
+  requestedResultsPerPage:
+    type: integer
+    format: int32
+  currentPage:
+    type: integer
+    format: int32
+  totalResults:
+    type: integer
+    format: int32

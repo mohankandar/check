@@ -1,0 +1,16 @@
+type: object
+title: System Data Response
+description: Schema for the systemData block in the response object of the getFileData and search endpoints.
+properties:
+  uploadedDateTime:
+    type: string
+    example: "2022-03-22T15:24:24"
+  contentName:
+    type: string
+    example: "bf52e49f-5351-4211-b1db-734e3d3c5b64.pdf"
+  mimeType:
+    type: string
+    example: "application/pdf"
+  uploadSource:
+    type: string
+    example: "VBMS-UI"

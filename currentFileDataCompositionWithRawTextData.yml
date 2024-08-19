@@ -1,0 +1,14 @@
+type: object
+title: Current File Data Response including Raw Text Data
+description: Schema for the response data for getFileData and search endpoints that contains raw text data.
+properties:
+  owner:
+    $ref: './folderIdentifier.yml'
+  uuid:
+    type: string
+    format: uuid
+  currentVersionUuid:
+    type: string
+    format: uuid
+  currentVersion:
+    $ref: './versionCompositionWithRawTextData.yml'

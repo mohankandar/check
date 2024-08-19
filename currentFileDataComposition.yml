@@ -1,0 +1,14 @@
+type: object
+title: Current File Data Response
+description: Schema for the response data for getFileData and search endpoints.
+properties:
+  owner:
+    $ref: './folderIdentifier.yml'
+  uuid:
+    type: string
+    format: uuid
+  currentVersionUuid:
+    type: string
+    format: uuid
+  currentVersion:
+    $ref: './versionComposition.yml'

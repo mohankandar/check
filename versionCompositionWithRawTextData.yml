@@ -1,0 +1,11 @@
+type: object
+title: Current Version Response including Raw Text Data
+description: Response data containing the system, provider and raw text data for a file. 
+  This response will always contain the latest information for the file.
+properties:
+  systemData:
+    $ref: './systemDataComposition.yml'
+  providerData:
+    $ref: './providerData.yml'
+  rawTextData:
+    $ref: './rawTextData.yml'

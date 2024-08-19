@@ -1,0 +1,125 @@
+type: object
+title: Provider Data Response
+description: Schema for the providerData block in the response object of the getFileData and search endpoints.
+properties:
+  modifiedDateTime:
+    type: string
+    example: "2022-03-22T15:24:49"
+  dateVaReceivedDocument:
+    type: string
+    example: "2020-02-20"
+  actionable:
+    type: boolean
+  certified:
+    type: boolean
+  claimantFirstName:
+    type: string
+  claimantMiddleInitial:
+    type: string
+  claimantLastName:
+    type: string
+  claimantSsn:
+    type: string
+    example: 123-45-6789
+  contentSource:
+    type: string
+    example: "VISTA"
+  benefitTypeId:
+    type: integer
+    example: 13
+  regionalProcessingOffice:
+    type: string
+    example: "Buffalo"
+  payeeCode:
+    type: string
+    example: "00"
+  facilityCode:
+    type: string
+    example: "Facility"
+  claimantParticipantId:
+    type: string
+    example: "000000000"
+  documentTypeId:
+    type: integer
+    format: int64
+    example: 137
+  documentCategoryId:
+    type: integer
+    format: int64
+    example: 14
+  endProductCode:
+    type: string
+    example: "130DPNDCY"
+  subject:
+    type: string
+    example: "File contains evidence related to the claim."
+  systemSource:
+    type: string
+    example: "VBMS-UI"
+  veteranFirstName:
+    type: string
+  veteranLastName:
+    type: string
+  veteranMiddleName:
+    type: string
+  veteranSuffix:
+    type: string
+  claimantDateOfBirth:
+    type: string
+    example: "2020-02-20"
+  newMail:
+    type: boolean
+    example: true
+  readByCurrentUser:
+    type: boolean
+    example: false
+  lastOpenedDocument:
+    type: boolean
+    example: false
+  duplicateInformation:
+    type: object
+    properties:
+      bestCopy:
+        type: boolean
+      certifiedCopy:
+        type: boolean
+      establishesDate:
+        type: boolean
+      groupId:
+        type: integer
+  ocrStatus:
+    type: string
+    example: "Searchable"
+  isAnnotated:
+    type: boolean
+    example: true
+  hasContentionAnnotation:
+    type: boolean
+    example: true
+  notes:
+    type: string
+    example: "This is a note."
+  bookmarks:
+    type: object
+    properties:
+      appeals:
+        $ref: ./responses/bookmarks/bookmarkSearchResponseModel.yml
+      medical:
+        $ref: ./responses/bookmarks/bookmarkSearchResponseModel.yml
+      peerReview:
+        $ref: ./responses/bookmarks/bookmarkSearchResponseModel.yml
+      workingNotes:
+        $ref: ./responses/bookmarks/bookmarkSearchResponseModel.yml
+      deferral:
+        $ref: ./responses/bookmarks/bookmarkSearchResponseModel.yml
+      dependency:
+        $ref: ./responses/bookmarks/bookmarkSearchResponseModel.yml
+      VBA:
+        $ref: ./responses/bookmarks/bookmarkRealmSearchResponseModel.yml
+      VRO:
+        $ref: ./responses/bookmarks/bookmarkRealmSearchResponseModel.yml
+      BVA:
+        $ref: ./responses/bookmarks/bookmarkRealmSearchResponseModel.yml
+
+
+

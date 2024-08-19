@@ -1,0 +1,10 @@
+type: object
+title: Search File Response
+description: Response containing results from search with applied filters.
+properties:
+  page:
+    $ref: './pageResponse.yml'
+  files:
+    type: array
+    items:
+      $ref: './currentFileDataComposition.yml'

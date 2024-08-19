@@ -1,0 +1,11 @@
+type: object
+title: Raw Text Data Response
+description: Schema for the rawTextData block in the response object of the getFileData and search endpoints. (Schema is not currently defined.)
+example:
+  {
+    rawOcrData: 'sample text',
+    ocrDataPerspectives: {
+      watson: 'sample text processed by ibm',
+      other: 'sample text processed by other'
+    }
+  }

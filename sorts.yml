@@ -1,0 +1,13 @@
+type: object
+title: Sort Request
+description: optional sorting request block.
+properties:
+  property:
+    type: string
+    example: providerData.subject
+  direction:
+    type: string
+    enum:
+      - ASCENDING
+      - DESCENDING
+    example: DESCENDING

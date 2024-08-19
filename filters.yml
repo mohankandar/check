@@ -1,0 +1,381 @@
+components:
+  documentTypeIdFilter:
+    type: object
+    title: Document Type Id Filter Request
+    description: Filters results on DocumentTypeId.
+    properties:
+      evaluationType:
+        type: string
+        enum:
+          - EQUALS
+      value:
+        type: string
+        description: This is a stringified json array of integers
+        example: "\"[131]\""
+  documentCategoryIdFilter:
+    type: object
+    title: Document Category Id Filter Request
+    description: Filters results on DocumentCategoryId.
+    properties:
+      evaluationType:
+        type: string
+        enum:
+          - EQUALS
+      value:
+        type: string
+        description: This is a stringified json array of integers
+        example: "\"[14]\""
+  subjectFilter:
+    type: object
+    title: Subject Filter Request
+    description: Filters results on Subject.
+    properties:
+      evaluationType:
+        type: string
+        enum:
+          - CONTAINS
+      value:
+        type: string
+        description: This is a stringified json array of strings.
+        example: '"[\"subject\", \"subject1\"]"'
+  contentNameFilter:
+    type: object
+    title: Content Name Filter Request
+    description: Filters results on ContentName.
+    properties:
+      evaluationType:
+        type: string
+        enum:
+          - EQUALS
+      value:
+        type: string
+        example: "testFileName0.12713919732752.pdf"
+  contentSourceFilter:
+    type: object
+    title: Content Source Filter Request
+    description: Filters results based on ContentSource.
+    properties:
+      evluationType:
+        type: string
+        enum:
+          - EQUALS
+      value:
+        type: string
+        example: "VISTA"
+  dateVaReceivedDocumentFilter:
+    type: object
+    title: Date Va Received Document Filter Request
+    description: Filters results on range for DateVaReceivedDocument.
+    properties:
+      evaluationType:
+        type: string
+        enum:
+          - BETWEEN
+      value:
+        type: string
+        description: This is a stringified json array of dates
+        example: '"[\"2020-10-09\",\"2020-10-11\"]"'
+  endProductCodeFilter:
+    type: object
+    title: End Product Code Filter Request
+    description: Filters results on EndProductCode.
+    properties:
+      evaluationType:
+        type: string
+        enum:
+          - EQUALS
+      value:
+        type: string
+        example: "030BGR"
+  associatedClaimId:
+    type: object
+    title: Associated Claim ID Request
+    description: Filter based on the claims associated to the documents.
+    properties:
+      evaluationType:
+        type: string
+        enum:
+          - EQUALS
+      value:
+        type: string
+        description: This is a stringified json array of integers
+        example: "\"[137,12837]\""
+  associationDateTimeFilter:
+    type: object
+    title: Document Association Date Filter Request
+    description: Filters results on range for AssociationDateTime.
+    properties:
+      evaluationType:
+        type: string
+        enum:
+          - BETWEEN
+      value:
+        type: string
+        description: This is a stringified json array of dates
+        example: '"[\"2020-10-09\",\"2020-10-11\"]"'
+  mimeTypeFilter:
+    type: object
+    title: Mime Type Filter Request
+    description: Filters results on MimeType.
+    properties:
+      evaluationType:
+        type: string
+        enum:
+          - EQUALS
+      value:
+        type: string
+        description: This is a stringified json array of mime types
+        example: '"[\"application/pdf\", \"image/tiff\"]"'
+  uploadSourceFilter:
+    type: object
+    title: Upload Source Filter Request
+    description: Filters results on uploadSource.
+    properties:
+      evaluationType:
+        type: string
+        enum:
+          - EQUALS
+      value:
+        type: string
+        example: "VBMS-UI"
+  claimantFirstNameFilter:
+    type: object
+    title: Claimant First Name Filter Request
+    description: Filters results on claimant's first name.
+    properties:
+      evaluationType:
+        type: string
+        enum:
+          - EQUALS
+      value:
+        type: string
+        example: "John"
+  claimantLastNameFilter:
+    type: object
+    title: Claimant Last Name Filter Request
+    description: Filters results on claimant's last name.
+    properties:
+      evaluationType:
+        type: string
+        enum:
+          - EQUALS
+      value:
+        type: string
+        example: "Smith"
+  claimantMiddleInitialFilter:
+    type: object
+    title: Claimant Middle Initial Filter Request
+    description: Filters results on claimant's middle initial.
+    properties:
+      evaluationType:
+        type: string
+        enum:
+          - EQUALS
+      value:
+        type: string
+        example: "M"
+  claimantSsnFilter:
+    type: object
+    title: Claimant Ssn Filter Request
+    description: Filters results on claimant's Ssn.
+    properties:
+      evaluationType:
+        type: string
+        enum:
+          - EQUALS
+      value:
+        type: string
+        example: "123456789"
+  claimantDateOfBirthFilter:
+    type: object
+    title: Claimant DOB Filter Request
+    description: Filters results on range for claimantDobFilter.
+    properties:
+      evaluationType:
+        type: string
+        enum:
+          - EQUALS
+      value:
+        type: string
+        description: This is the claimant DOB
+        example: "2020-10-09"
+  benefitTypeIdFilter:
+    type: object
+    title: Benefit Type Id Filter Request
+    description: Filters results on Benefit Type Id. This filter only accepts string numbers 0-9
+    properties:
+      evaluationType:
+        type: string
+        enum:
+          - EQUALS
+      value:
+        type: string
+        example: "\"12\""
+  payeeCodeFilter:
+    type: object
+    title: Payee Code Filter Request
+    description: Filters results on payee code.
+    properties:
+      evaluationType:
+        type: string
+        enum:
+          - EQUALS
+      value:
+        type: string
+        example: "01"
+  regionalProcessingOfficeFilter:
+    type: object
+    title: Regional Processing Office Filter Request
+    description: Filters results on regional processing office.
+    properties:
+      evaluationType:
+        type: string
+        enum:
+          - EQUALS
+      value:
+        type: string
+        example: "Buffalo"
+  facilityCodeFilter:
+    type: object
+    title: Facility Code Filter Request
+    description: Filters results on facility code.
+    properties:
+      evaluationType:
+        type: string
+        enum:
+          - EQUALS
+      value:
+        type: string
+        example: "Facility"
+  claimantParticipantIdFilter:
+    type: object
+    title: Claimant Participant Id Filter Request
+    description: Filters results on claimant participant Id.
+    properties:
+      evaluationType:
+        type: string
+        enum:
+          - EQUALS
+      value:
+        type: string
+        example: "00000000"
+  ocrPerspectiveFilter:
+    type: object
+    title: OCR Perspective Filter Request
+    description: Filters results on OCR perspective.
+    properties:
+      evaluationType:
+        type: string
+        enum:
+          - EQUALS
+      value:
+        type: string
+        example: "persp1"
+  lineOfBusinessIdFilter:
+    type: object
+    title: Line of Business Id Filter Request
+    description: Filters results based on documents that are associated with the provided line of business through their type or content source
+    properties:
+      evaluationType:
+        type: string
+        enum:
+          - EQUALS
+      value:
+        type: string
+        example: "VRE"
+  textContentFilter:
+    type: object
+    title: Text search Filter Request
+    description: Filters results based on text search content in the documents
+    properties:
+      evaluationType:
+        type: string
+        enum:
+          - EQUALS
+      value:
+        type: string
+        example: "galaxy"
+  duplicateGroupIdFilter:
+    type: object
+    title: Duplicate Group Filter Request
+    description: Filters results based on the duplicate group they belong to
+    properties:
+      evaluationType:
+        type: string
+        enum:
+          - EQUALS
+      value:
+        type: string
+        example: "2"
+  textSearchableFilter:
+    type: object
+    title: Text Searchable Filter Request
+    description: Filters results based on the text searchable status of a document
+    properties:
+      evaluationType:
+        type: string
+        enum:
+          - EQUALS
+      value:
+        type: boolean
+        example: true
+  hasAnnotationsFilter:
+    type: object
+    title: Has Annotations Filter Request
+    description: Filters results based on the existence of annotations for a document
+    properties:
+      evaluationType:
+        type: string
+        enum:
+          - EQUALS
+      value:
+        type: boolean
+        example: true
+  hasNotesFilter:
+    type: object
+    title: Notes Filter Request
+    description: Filters results based on the notes
+    properties:
+      evaluationType:
+        type: string
+        enum:
+          - EQUALS
+      value:
+        type: string
+        example: "true"
+  ocrStatusFilter:
+    type: object
+    title: Ocr Status Filter Request
+    description: Filters results based on the ocr status of a document
+    properties:
+      evaluationType:
+        type: string
+        enum:
+          - EQUALS
+      value:
+        type: string
+        example: "['Searchable', 'Not Searchable', 'Failure to Process']"
+  annotationTypeFilter:
+    type: object
+    title: Annotation Type Filter Request
+    description: Filters results based on the annotation types associated with the document
+    properties:
+      evaluationType:
+        type: string
+        enum:
+          - EQUALS
+      value:
+        type: string
+        example: ['FREETEXT', 'CALLOUT', 'CONTENTION', 'NOTE']
+  annotationKeywordFilter:
+    type: object
+    title: Annotation Keyword Filter Request
+    description: Filters results based on keywords in the title and comments of associated annotations
+    properties:
+      evaluationType:
+        type: string
+        enum:
+          - CONTAINS
+      value:
+        type: string
+        example: ['keyword1', 'keyword2']

@@ -1,0 +1,91 @@
+post:
+  tags:
+    - Folder
+  summary: Search Files
+  description: >-
+    ### Searches files by provided FolderIdentifier, and search request
+    filers.
+  operationId: searchFiles
+  parameters:
+    - name: X-Folder-URI
+      in: header
+      description: >-
+        The Folder Identifier that the file will be associated to. The example
+        provided is for identifying a veteran.<br><br>**Header Format**:
+        folder-type:identifier-type:ID<br><br>**Valid Folder-Types**:<br>
+        <br>* VETERAN - Allows: FILENUMBER, SSN, PARTICIPANT_ID, SEARCH, and EDIPI
+        <br>* PERSON - Allows: PARTICIPANT_ID, SEARCH
+        <br>
+        <br> For search identifiers as a type, the ssn, date of birth, last name, and first name must be supplied on the ID field as query params encoded.
+      required: true
+      schema:
+        type: string
+      example: 'VETERAN:FILENUMBER:987267855'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: './requests/search/searchFileRequest.yml'
+  responses:
+    '200':
+      description: Search was successful given provided search request.
+      content:
+        application/json:
+          schema:
+            $ref: './responses/search/searchFileResponse.yml'
+        application/problem+json:
+          schema:
+            $ref: './responses/search/searchFileResponse.yml'
+    '400':
+      description: Server was unable to understand the request. This may come back as an empty response if the json is malformed or not understood by the server.
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: './responses/errors/vefsErrorCodes.yml#/components/schemas/INVALID_JWT'
+              - $ref: './responses/errors/vefsErrorCodes.yml#/components/schemas/INVALID_REQUEST'
+              - $ref: './responses/errors/vefsErrorCodes.yml#/components/schemas/INVALID_X_EFOLDER_URI'
+              - $ref: './responses/errors/vefsErrorCodes.yml#/components/schemas/UNABLE_TO_VERIFY_FOLDER'
+              - $ref: './responses/errors/vefsErrorCodes.yml#/components/schemas/DOES_NOT_CONFORM_TO_SCHEMA'
+              - $ref: './responses/errors/vefsErrorCodes.yml#/components/schemas/VALIDATE_INVALID_VALUE'
+    '401':
+      description: The authentication mechanism failed and hence access is forbidden.
+      content:
+        application/json:
+          schema:
+            $ref: './responses/errors/noJwtResponse.yml'
+    '403':
+      description: >-
+        The request is not authorized.  Please verify credentials used in
+        the request.
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: './responses/errors/vefsErrorCodes.yml#/components/schemas/UNABLE_TO_RETRIEVE_PERSON'
+              - $ref: './responses/errors/vefsErrorCodes.yml#/components/schemas/UNABLE_TO_RETRIEVE_VETERAN'
+              - $ref: './responses/errors/vefsErrorCodes.yml#/components/schemas/UNAUTHORIZED'
+    '500':
+      description: >-
+        There was an error encountered processing the Request.  Response
+        will contain a  "messages" element that will provide further
+        information on the error.  Please retry.  If problem persists,
+        please contact support with a copy of the Response.
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: './responses/errors/vefsErrorCodes.yml#/components/schemas/UNABLE_TO_RETRIEVE_USER'
+              - $ref: './responses/errors/vefsErrorCodes.yml#/components/schemas/NO_RESULTS_RETURNED'
+              - $ref: './responses/errors/vefsErrorCodes.yml#/components/schemas/INVALID_EVALUATION_TYPE'
+              - $ref: './responses/errors/vefsErrorCodes.yml#/components/schemas/NULL_RESPONSE'
+              - $ref: './responses/errors/vefsErrorCodes.yml#/components/schemas/UNKNOWN_ERROR'
+              - $ref: './responses/errors/vefsErrorCodes.yml#/components/schemas/JSON_DESERIALIZATION'
+              - $ref: './responses/errors/vefsErrorCodes.yml#/components/schemas/JSON_SERIALIZATION'
+    '501':
+      description: This endpoint is not enabled.
+      content:
+        application/json:
+          schema:
+            $ref: './responses/errors/vefsErrorCodes.yml#/components/schemas/OPERATION_NOT_ENABLED'

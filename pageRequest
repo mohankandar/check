@@ -1,0 +1,12 @@
+type: object
+title: Paging Request
+description: Paging request from user.
+properties:
+  resultsPerPage:
+    type: integer
+    format: int32
+    example: 10
+  page:
+    type: integer
+    format: int32
+    example: 1

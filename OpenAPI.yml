@@ -1,0 +1,115 @@
+openapi: '3.0.0'
+info:
+  title: Claim Evidence API.
+  description: >-
+    The Claim Evidence Application Programming Interface (API) is file
+    service for handling the storage and management of files supporting VA
+    benefit claims. It serves as a modernized point of entry to files previously
+    only accessible through VBMS eFolder. It is designed for easier implementation
+    by consuming systems, but also with the ability to eventually replace
+    the eFolder logic within VBMS.
+  termsOfService: 'https://developer.va.gov/terms-of-service'
+  license:
+    name: Apache 2.0
+    url: 'https://www.apache.org/licenses/LICENSE-2.0'
+  version: 0.0.1-SNAPSHOT
+security:
+  - bearer-key: []
+servers:
+  - url: /api/v1/rest
+paths:
+  '/folders/files:search':
+    $ref: './paths/search.yml'
+  /files:
+    $ref: './paths/upload.yml'
+  '/files/{uuid}/':
+    $ref: './paths/update.yml'
+  '/files/{uuid}/data':
+    $ref: './paths/data.yml'
+  '/files/{uuid}/data/ocr':
+    $ref: './paths/ocr.yml'
+  '/files/{uuid}/content':
+    $ref: './paths/getContent.yml'
+  '/files/{uuid}/annotations':
+    $ref: './paths/annotations.yml'
+  '/files/{uuid}/bookmarks':
+     $ref: './paths/bookmarks.yml'
+  '/files/{uuid}/annotations/{annotationUuid}':
+    $ref: './paths/editdeleteAnnotation.yml'
+  '/files/{uuid}/associations/claims':
+    $ref: './paths/associations.yml'
+  '/files/uuids:exchange':
+    $ref: './paths/uuidExchange.yml'
+  '/permissions/folders':
+    $ref: './paths/folderPermissions.yml'
+  '/permissions/post/files':
+    $ref: './paths/uploadPermissions.yml'
+  '/permissions/put/files/{uuid}/data':
+    $ref: './paths/updateDataPermissions.yml'
+  '/permissions/post/folders/files:search':
+    $ref: './paths/searchPermissions.yml'
+  '/permissions/post/files/{fileUuid}/annotations':
+    $ref: './paths/createAnnotationsPermissions.yml'
+  '/permissions/put/files/{fileUuid}/annotations/{annotationUuid}':
+    $ref: './paths/updateAnnotationsPermissions.yml'
+  '/permissions/delete/files/{fileUuid}/annotations/{annotationUuid}':
+    $ref: './paths/deleteAnnotationsPermissions.yml'
+  '/permissions/notes':
+    $ref: './paths/notePermissions.yml'
+  '/permissions/patch/files:move':
+    $ref: './paths/movePermissions.yml'
+  '/permissions/manage/saved-filters':
+    $ref: './paths/publishSavedFiltersPermissions.yml'
+  '/folders/lastreadbycurrentuser':
+    $ref: './paths/lastReadDocument.yml'
+  '/documenttypes':
+    $ref: './paths/getDocumentTypes.yml'
+  '/contentsources':
+    $ref: './paths/getContentSources.yml'
+  '/folders/uploadsources':
+    $ref: './paths/getUploadSources.yml'
+  '/files/{uuid}/data/rawtext/ocr/raw':
+    $ref: './paths/ocrOperations.yml#/ocrRawText'
+  '/files/{uuid}/data/rawtext/ocr/perspective/{key}':
+    $ref: './paths/ocrOperations.yml#/ocrPerspectives'
+  '/ocr/reprocess/file':
+    $ref: './paths/OcrReanalyze.yml'
+  '/notes':
+    $ref: './paths/createNote.yml'
+  '/notes:search':
+    $ref: './paths/searchNotes.yml'
+  '/notes/{uuid}':
+    $ref: './paths/archiveNote.yml'
+  '/migrate/note':
+    $ref: './paths/migrateNote.yml'
+  '/publishedfilters':
+    $ref: './paths/savedFilters/getPublishedFilters.yml'
+  '/savedfilters':
+    $ref: './paths/savedFilters/savedFilters.yml'
+  '/savedfilters/{id}':
+    $ref: './paths/savedFilters/editFilter.yml'
+  '/publishedfilters/{id}/subscribe':
+    $ref: './paths/savedFilters/subscribeToFilter.yml'
+  '/publishedfilters/{id}/unsubscribe':
+    $ref: './paths/savedFilters/unsubscribeToFilter.yml'
+  '/manage/queries/{id}':
+    $ref: './paths/deleteSavedFileQuery.yml'
+  '/folders/notifications/move':
+    $ref: './paths/moveNotifications.yml'
+  '/files/{uuid}/periodOfService':
+    $ref: './paths/periodOfServiceDocuments.yml'
+  '/files/{uuid}/{versionuuid}/content':
+    $ref: './paths/getVersionContent.yml'
+tags:
+  - name: PRODUCT_SCOPE
+    description: BIP
+  - name: PRODUCT_LINE_SCOPE
+    description: C&P
+  - name: PORTFOLIO_SCOPE
+    description: BAM
+components:
+  securitySchemes:
+    bearer-key:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

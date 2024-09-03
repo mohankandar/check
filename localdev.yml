@@ -1,0 +1,558 @@
+# Global Server and Build Settings
+# Learn: https://docs.spring.io/spring-boot/docs/current/reference/html/howto-properties-and-configuration.html#howto-use-yaml-for-external-properties
+
+# Local dev environment specific settings.  For application settings go to the bip-vefs-claimevidence.yml file.  For specific
+# environment settings go to the bip-vefs-claimevidence-config repository for all avaiable yaml files.
+
+spring.profiles: default
+spring.profiles.include: remote_client_impls, embedded-redis
+---
+spring:
+  datasource:
+    username: VEFS_USER
+    password: VeFsAcce55
+    url: jdbc:oracle:thin:@vbmsdb:1521/XE
+    #management.endpoints.enabled-by-default: true
+  cache:
+    redis:
+      time-to-live: 30s
+    caffeine:
+      expire-after-write: 15s
+  redis:
+    ssl: false
+    host: localhost
+    port: 6379
+    # password:    # If host takes a password
+    # url:         # URL overrides host/port/password
+    # database: 0  # The database index to use
+    # timeout:     # Connection timeout (millis)
+    # Jedis is activated by being on the classpath
+    jedis:
+      # At least one variable *must* be set in order to enable the pool
+      pool:
+        # max-idle: 8   # Max number of idle connections in the pool
+        # min-idle: 0   # Min number of idle connections to maintain
+        # max-active: 8 # Max number of allocated connections (-1 for unlimited)
+        max-wait: -1    # Max wait millis when pool is exhausted (-1 for unlimited)
+      # cluster:
+      # max-redirects: # Maximum number of redirects to follow when executing commands across the cluster
+      # nodes:         # Comma-separated list of "host:port" pairs to bootstrap from
+      # sentinel:
+      # master:  # Name of the Redis server
+      # nodes:   # Comma-separated list of "host:port" pairs
+contentsync:
+  datasource:
+    username: VBMSCONTENTSYNC_USER
+    password: VbMsC0nt3ntSync@cC3S5
+    url: jdbc:oracle:thin:@vbmsdb:1521/XE
+#Application Custom Properties
+bip-vefs-api-rest:
+  propSource: internal
+  password: secret
+  sampleProperty: >
+    sampleProperty___env/profile:${bip-vefs-api-rest.env}___propSource:
+    ${bip-vefs-api-rest.propSource}__password:${bip-vefs-api-rest.password}
+
+
+###############################################################################
+#Property configuration to enable or disable JWT security for the service calls
+#JWT security is enabled by default. So to disable it you have to
+#set the environment system property bip.framework.security.jwt.enabled=false
+###############################################################################
+bip.framework:
+  security:
+    jwt:
+      enabled: true
+      keyPairs[0]:
+        secret: A90E153DCB4614EF2B0E57E357B89504
+        issuer: vefs
+        signatureAlgorithm: HS256
+      keyPairs[1]:
+        secret: A90E153DCB4614EF2B0E57E357B89504
+        issuer: VBMS-UI
+        signatureAlgorithm: HS256
+      keyPairs[2]:
+        secret: Uu_eHhetr29H860Pd9j4OU54Q_iV3aHCEVZUF7O2MNk
+        issuer: https://bss-dev.dev8.bip.va.gov/auth/realms/idp
+      keyPairs[3]:
+        publicKey: -----BEGIN PUBLIC KEY-----\
+          MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA1TqJRRj9uyutGgkUNYNl\
+          CvH4wE1OalqaokFpypXVicteveyuxS8RBL2Q8Ea7qja8xBd+qNTXrVzRipBVk+B1\
+          1qi5yN2TDkTExu6nEDVS0CNVylNPl/Z8Yefc3RS/CARu6jL8LHoKn91YSBdRTUQg\
+          HgW+le73S14vKrra6cQUY8W+zygrZX+yFG6kMOZFKvY9qvh/muslu4/p490MlHw1\
+          BMjomDSdh3N/6qaD2R1J/bVoQrht6x9AjFmDo30074a++CSRvxHEyaTU2BTlzt/k\
+          e+yGKAWh8AAMk8F2z0b9dUrgsPltgv7Ldu5jLXQXvr+ReJSukzv6FF0fO8nliWST\
+          EQIDAQAB\
+          -----END PUBLIC KEY-----
+        issuer: https://bss-dev.dev8.bip.va.gov/auth/realms/idp
+        signatureAlgorithm: RS256
+      keyPairs[4]:
+        secret: A90E153DCB4614EF2B0E57E357B89504
+        issuer: CE_MIGRATION
+        signatureAlgorithm: HS256
+      keyPairs[5]:
+        secret: A90E153DCB4614EF2B0E57E357B89504
+        issuer: ocr-kafka-event-scan
+        signatureAlgorithm: HS256
+      keyPairs[6]:
+        secret: A90E153DCB4614EF2B0E57E357B89504
+        issuer: ocr-priority-list-scan
+        signatureAlgorithm: HS256
+      keyPairs[7]:
+        secret: A90E153DCB4614EF2B0E57E357B89504
+        issuer: ADG
+        signatureAlgorithm: HS256
+  swagger:
+    # enable/disable the swagger/openapi UI ...
+    enabled: true
+    securePaths: /api/v?.*/rest/.*
+
+folder:
+  notes:
+    retry:
+      pagesize: 100
+      issuers:
+        - VBMS-UI
+        - vefs
+
+migration:
+  enabled: true
+  migrate:
+    enabled: true
+    file:
+      non-veteran:
+        enabled: true
+    folder-note:
+      non-veteran:
+        enabled: true
+    rollback:
+      enabled: true
+  provision:
+    enabled: true
+  provision-retry:
+    issuers:
+      - VBMS-UI
+      - vefs
+    enabled: true
+  provision-s3:
+    enabled: true
+  reset:
+    enabled: true
+ocr:
+  endpoints:
+    data:
+      upload:
+        enabled: true
+      retrieve:
+        enabled: true
+      update:
+        enabled: true
+      reprocess-status:
+        enabled: true
+    search-matches:
+      enabled: true
+      num-surrounding-words: 4
+aws:
+  enabled: true
+  connection:
+    dynamo:
+      configuration:
+        enabled: false
+        endpoint: http://localhost:4565
+        region: us-east-2
+        tableName: ClaimEvidence
+        secondaryIndex: ObjectUuidIndex
+        awsAccessKeyId: ABCFAKESTUFF
+        awsSecretAccessKey: ABCFAKESTUFF
+    opensearch:
+      configuration:
+        enabled: true
+        endpoint: http://vefs-claimevidence-ocr.us-east-1.opensearch.localhost.localstack.cloud:4566
+        region: us-east-1
+        index: ocr-data-local
+        useMultiIndex: true
+        indexAlias: ocr-data-local-1
+        indexPattern: ocr-data-local*
+        timeout:
+          socket: 60000
+          connect: 5000
+        authenticationStrategy: BASIC
+        credentials:
+          username: vefs
+          password: V3fsP@ssw0rd1234!
+        awsAccessKeyId: ABCFAKESTUFF
+        awsSecretAccessKey: ABCFAKESTUFF
+        maxExpansions:
+          upperLimit: 800
+          lowerLimit: 50
+          modifier: 0.25
+        fuzzy-search:
+          strategy: SQUARE_ROOT
+          manual-fuzzy-distance: 2
+        highlighting:
+          useMultiSearch: true
+          fragmentSize: 50
+        matchTabulation:
+          parallelized: true
+          parallelism: 5
+    s3:
+      migration:
+        configuration:
+          endpoint: http://localhost:4566
+          awsAccessKeyId: vefsAccessId
+          region: us-east-1
+          bucketName: bip-vefs-staging
+          subDirectory:
+          awsSecretAccessKey: vefsSecret
+          cannedAccessControlList: bucket-owner-full-control
+      configuration:
+        endpoint: http://localhost:4566
+        awsAccessKeyId: vefsAccessId
+        region: us-east-1
+        bucketName: bip-vefs-dev
+        subDirectory:
+        healthCheckObjectKey: healthCheck.txt
+        awsSecretAccessKey: vefsSecret
+        signedUrlValidInMinutes: 5
+        retrieveByVersionEnabled: true
+        signedUrlHostAlias: http://localhost:4566
+        cannedAccessControlList: bucket-owner-full-control
+    sqs:
+      configuration:
+        awsAccessKeyId: vefsAccessId
+        awsSecretAccessKey: vefsSecret
+        endpoint: http://localhost:4566
+        region: us-east-1
+        queueName: claimevidence-migration-file-queue.fifo
+        ocr:
+          reprocess:
+            queue-name: project-vbms-vefs-claimevidence-ocr-reprocess-queue-local
+          priority-list-scan:
+            queue-name: project-vbms-vefs-claimevidence-ocr-list-scan-queue-local.fifo
+            issuer: ocr-priority-list-scan
+          on-demand-scan:
+            queue-name: project-vbms-vefs-claimevidence-ocr-on-demand-scan-queue-local.fifo
+            issuer: VBMS-UI
+          new-upload-scan:
+            queue-name: project-vbms-vefs-claimevidence-ocr-new-upload-scan-queue-local.fifo
+            issuer: ocr-kafka-event-scan
+bgs:
+  base-uri: http://bepdev.vba.va.gov
+  ssl:
+    enabled: true
+    key-store: classpath:security/keystores/dev.vbms.aide.oit.va.gov.jks
+    key-store-password: vbmskey
+    key-alias: dev.vbms.aide.oit.va.gov
+    key-password: vbmskey
+    trust-store: classpath:security/keystores/dev.vbms.aide.oit.va.gov.jks
+    trust-store-password: vbmskey
+bip:
+  partner:
+    bgs-common-security-web-service:
+      soap:
+        address: ${bgs.base-uri}/css-webservices/CommonSecurityServiceImplWSV1
+        ssl:
+          enabled: ${bgs.ssl.enabled}
+          key-store: ${bgs.ssl.key-store}
+          key-store-password: ${bgs.ssl.key-store-password}
+          key-alias: ${bgs.ssl.key-alias}
+          key-password: ${bgs.ssl.key-password}
+          trust-store: ${bgs.ssl.trust-store}
+          trust-store-password: ${bgs.ssl.trust-store-password}
+  efolder:
+    mimeTypeFilter:
+      enabled: true
+
+  vefs:
+    claimevidence:
+      epCodeValidationBypassIssuers:
+        - DocGenGenStore
+      get-content:
+        remediate-concurrent-versions: true
+        signed-urls:
+          enabled: true
+      exchange-uuids:
+        enabled: true
+      search-metrics:
+        enabled: true
+        search-uuid:
+          enabled: true
+      saved-filters:
+        retrieve-published-filters:
+          enabled: true
+        retrieve-saved-filters:
+          enabled: true
+        unsubscribe-published-filters:
+          enabled: true
+      move:
+        enabled: true
+      upload:
+        newmail:
+          enabled: true
+        attorneyFeeFlash:
+          enabled: false
+        ocr:
+          enabled: true
+      updateData:
+        newmail:
+          enabled: true
+        document-annotation:
+          enabled: true
+      lastReadDocument:
+        enabled: true
+      x-folder-uri:
+        allowSearch: true
+        allowPersonSsn: true
+        icn:
+          enabled: true
+      non-veteran:
+        enabled: true
+        chainConfig:
+          retrieve_signed_url: true
+          permission: true
+          upload: true
+          search: true
+          update: true
+          update_data: true
+          get_file_data: true
+          get_content_sources: true
+          move: true
+          bulk_move: true
+          download: true
+          get_upload_sources: true
+          save_annotation: true
+          update_annotation: true
+          delete_annotation: true
+          get_annotations: true
+          create_folder_note: true
+      presumptive-bin:
+        upload: true
+        update: true
+        move: true
+        download: true
+      unidentified-mail-bin:
+        upload: true
+        update: true
+        move: true
+        download: true
+      participant-service-mock:
+        enabled: false
+      search:
+        annotation-data-transform-on-search:
+          enabled: true
+        remediate-concurrent-versions: true
+        calculate-number-of-matches: false
+        filters:
+          documentCategoryId:
+            enabled: true
+          textContent:
+            enabled: true
+            computedSortEnabled: true
+            limitNumberOfMatchesEnabled: true
+            maximumNumberOfMatches: 50
+          textSearchable:
+            enabled: true
+          hasAnnotations:
+            enabled: true
+          annotationType:
+            enabled: true
+          annotationKeyword:
+            enabled: true
+          hasNotes:
+            enabled: true
+          documentOcrStatus:
+            enabled: true
+          periodOfService:
+            enabled: true
+      notifications:
+        move:
+          enabled: true
+      counts:
+        enabled: true
+        bookmarks:
+          enabled: true
+      bookmarks:
+        create:
+          enabled: true
+        delete:
+          enabled: true
+      associations:
+        claims:
+          enabled: true
+      annotation:
+        contention:
+          enabled: true
+      ocr:
+        reanalyze:
+          enabled: true
+        retry:
+          scheduler:
+            cron: 0 * * ? * * #every minute
+            max-results: 5
+            enabled: false
+        reprocess:
+          scheduler:
+            cron: 0 * * ? * * #every minute
+            max-results: 5
+            enabled: false
+        provision:
+          enabled: true
+        folder-scan:
+          enabled: true
+        file-status:
+          enabled: true
+          textractJobId:
+            enabled: true
+        retry-limit:
+          enabled: true
+          max-retry-limit: 15
+        folder-scan-status:
+          enabled: true
+        scan-on-unrecoverable-data:
+          enabled: true
+      s3:
+        maxRetryAttempts: 3
+        retryEnabled: true
+        unitOfTime: ms
+        backoffTime: 30
+        initialDelay: 200
+      packaging:
+        enabled: true
+      documentDuplicate:
+        group:
+          create:
+            enabled: true
+      getDocumentTypes:
+        isUpdateSubjectRestricted:
+          enabled: true
+      tera.memo:
+        data:
+          enabled: true
+      bva-notes:
+        enabled: true
+    framework:
+      content:
+        fileSizeLimitInMiB: 5
+        allowableFileExtensions: [pdf,png,pdf,tif,tiff,txt,jpg,jpeg,bmp]
+        exceptionHandlingStrategy: EVENT
+  packageManager:
+    enabled: true
+    service:
+      baseUrl: https://pacman-dev.dev.bip.va.gov
+      jwt:
+        secret: mySecret
+        system-saml-token: |
+          <saml2:Assertion xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion" xmlns:xs="http://www.w3.org/2001/XMLSchema" ID="_2a852e56-db62-4f9d-b0ce-941ac1f9be0e" IssueInstant="2020-03-13T19:41:49.477Z" Version="2.0"><saml2:Issuer Format="urn:oasis:names:tc:SAML:2.0:nameid-format:entity">https://vbms.aide.oit.va.gov</saml2:Issuer><ds:Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#"><ds:SignedInfo><ds:CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/><ds:SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256"/><ds:Reference URI="#_2a852e56-db62-4f9d-b0ce-941ac1f9be0e"><ds:Transforms><ds:Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/><ds:Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"><ec:InclusiveNamespaces xmlns:ec="http://www.w3.org/2001/10/xml-exc-c14n#" PrefixList="xs"/></ds:Transform></ds:Transforms><ds:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"/><ds:DigestValue>ZvtwIiObcbjCfLtYbMaFj21tOFBN1y3mdXvyAe1PBr0=</ds:DigestValue></ds:Reference></ds:SignedInfo><ds:SignatureValue>GkRZqvE0quiDG8yxQ6Moz3QXpv33o2/nRmCO5j4gfcOROv7aQkJ6oUTtc5oVfi1rMm4+hVsC/x0S9c5EaJFfuDDZxO+T9oI2/fkzxrtKP0fwbjfTjpPLATbtzopOrNY6a1IXUe3rytmgxMH4p22fpUoGuFWcdAwC3w60AVfAwkZPh9bTHg9kbAmbxSbrKmHPygeFsQlFWuGaAhM8UKXafPWBFa2Pz/0jTv92SfJqKSsyu44Z5iQb84ppkuIziCNgLnknvLCfzP5H+AaItrvAPqO7xbkYO+eUMkPDA78lmS2EhJCfXa0hEcENHRfysVnVNs0iZA4P1DM7YLHIbWmLIQ==</ds:SignatureValue><ds:KeyInfo><ds:X509Data><ds:X509Certificate>MIIFAzCCA+ugAwIBAgIHPQAAABvdlDANBgkqhkiG9w0BAQsFADBKMRMwEQYKCZImiZPyLGQBGRYD
+          Z292MRIwEAYKCZImiZPyLGQBGRYCdmExHzAdBgNVBAMTFlZBLUludGVybmFsLVMyLUlDQTEtdjEw
+          HhcNMTgwNDExMTUzNzQwWhcNMjEwNDEwMTUzNzQwWjB1MQswCQYDVQQGEwJVUzERMA8GA1UECBMI
+          VmlyaWdpbmExETAPBgNVBAcTCEN1bHBlcGVyMRIwEAYDVQQKEwlBSURFLVZCTVMxDTALBgNVBAsT
+          BFZCTVMxHTAbBgNVBAMTFHZibXMuYWlkZS5vaXQudmEuZ292MIIBIjANBgkqhkiG9w0BAQEFAAOC
+          AQ8AMIIBCgKCAQEAspkEWmRJm5k81I80Gjtefhw1iL5kLQkoxg+vXHpjy0VyMd3NtTRy9doAFHbI
+          6HULgYPsase8fATnLwgkicwKP0YWd1NGwhMD3KL7+62jNVvLq3bioHY1F6leGhrMLGCqbAeQnP2s
+          Tfs65hfr/A8yEK2h4Yy4VkB31pzz0qptU3IKP5xUP8+xAMn2xqj17ZhD/gYF3jxs3hQRchh7qtpk
+          Vq/ZwmTV2p2xnxbW2RjYEaqnIOO4/MXWn46cwGZfcWw6WIFYaDlHpjXoARDspkO/EtS3q3MWvaDY
+          a6guMGBqz1W6Z37VdCUX8aapDn8fykOHDY6qJkiRUbnSqyN3b/nZEwIDAQABo4IBwTCCAb0wHQYD
+          VR0OBBYEFJaaxmV0Yy9/zQ/u40QqZSjUbsdOMB8GA1UdIwQYMBaAFBtt3+s95eIN7xax0N5fWBpW
+          y+TsMEkGA1UdHwRCMEAwPqA8oDqGOGh0dHA6Ly9jcmwucGtpLnZhLmdvdi9wa2kvY3JsL1ZBLUlu
+          dGVybmFsLVMyLUlDQTEtdjEuY3JsMHsGCCsGAQUFBwEBBG8wbTBHBggrBgEFBQcwAoY7aHR0cDov
+          L2FpYS5wa2kudmEuZ292L3BraS9haWEvdmEvVkEtSW50ZXJuYWwtUzItSUNBMS12MS5jZXIwIgYI
+          KwYBBQUHMAGGFmh0dHA6Ly9vY3NwLnBraS52YS5nb3YwCwYDVR0PBAQDAgWgMD0GCSsGAQQBgjcV
+          BwQwMC4GJisGAQQBgjcVCIHIwzOB+fAGgaWfDYTggQiFwqpLBoOCn2CB4ItSAgFkAgEVMB0GA1Ud
+          JQQWMBQGCCsGAQUFBwMCBggrBgEFBQcDATAnBgkrBgEEAYI3FQoEGjAYMAoGCCsGAQUFBwMCMAoG
+          CCsGAQUFBwMBMB8GA1UdEQQYMBaCFHZibXMuYWlkZS5vaXQudmEuZ292MA0GCSqGSIb3DQEBCwUA
+          A4IBAQCODYVIvpsrrqYCTldzmgFXawAun50AYyj29rmfqVi3b2XWVRkA0Bd2BJoc0hcb7b/7gU3H
+          a8U3O170IUnenQoq8dArDKaqPxx7WX8nrs4+n3FG4gQRfoNYyr6fxPsAwOMxudSb7EAV9AqDofyc
+          cKFSTyYpr6GV8eTBKFamU/pBs+EmffMpG/9yq+2NT9hpZ7HRhdud6+iZGsL9kXVT9q/TXuslDDX3
+          0/qrOQfgjghOu6F/5042DGMsOYU0MaAo496XdLsLnGH06nxD8oeXM1+ubrL4jCgG33xg6w+s6MbF
+          I69l77ANo02P5scUPXqRbnOOiDrZumdoJXzpV1c97cu0</ds:X509Certificate></ds:X509Data></ds:KeyInfo></ds:Signature><saml2:Subject><saml2:NameID Format="urn:oasis:names:tc:SAML:2.0:nameid-format:persistent">VBMSSYSACCT</saml2:NameID><saml2:SubjectConfirmation Method="urn:oasis:names:tc:SAML:2.0:cm:bearer"><saml2:SubjectConfirmationData NotBefore="2020-03-13T19:41:49.477Z" NotOnOrAfter="2030-03-11T19:41:49.477Z" Recipient="https://pension-automation.bip.va.gov"/></saml2:SubjectConfirmation></saml2:Subject><saml2:Conditions NotBefore="2020-03-13T19:41:49.477Z" NotOnOrAfter="2030-03-11T19:41:49.477Z"><saml2:AudienceRestriction><saml2:Audience>https://vbms.aide.oit.va.gov</saml2:Audience></saml2:AudienceRestriction></saml2:Conditions><saml2:AuthnStatement AuthnInstant="2020-03-13T19:41:49.555Z" SessionIndex="_2a852e56-db62-4f9d-b0ce-941ac1f9be0e" SessionNotOnOrAfter="2030-03-11T19:41:49.555Z"><saml2:AuthnContext><saml2:AuthnContextClassRef>urn:oasis:names:tc:SAML:2.0:ac:classes:Password</saml2:AuthnContextClassRef></saml2:AuthnContext></saml2:AuthnStatement><saml2:AttributeStatement><saml2:Attribute Name="http://vba.va.gov/css/common/securityLevel"><saml2:AttributeValue xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xs:string">9</saml2:AttributeValue></saml2:Attribute><saml2:Attribute Name="http://vba.va.gov/css/common/stationId"><saml2:AttributeValue xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xs:string">283</saml2:AttributeValue></saml2:Attribute><saml2:Attribute Name="http://vba.va.gov/css/common/subjectId"><saml2:AttributeValue xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xs:string">0</saml2:AttributeValue></saml2:Attribute></saml2:AttributeStatement></saml2:Assertion>
+      ssl:
+        enabled: false
+        trust-store: classpath:va_cacerts.jks
+        trust-store-password: changeit
+efolder:
+  web:
+    services:
+      alternativeDocumentTypes:
+        1: Notice of Disagreement (NOD)
+        2: Substantive Appeal to Board of Veterans' Appeals
+        3: Statement of the Case (SOC)
+        4: Supplemental Statement of the Case (SSOC)
+vbms:
+  saml:
+    gen:
+      sign:
+        # the password to allow access to the keystore
+        keystorePassword: vbmsclient
+        # the classpath location of the keystore containing the private key certificate to use for signing
+        keystoreFile: security/keystores/vbms-internal.client.vbms.aide.oit.va.gov.jks
+        # the alias of the private key certificate to use for signing
+        keyAlias: vefs.client.vbms.aide.oit.va.gov
+        # the password to allow access to the private key
+        keyPassword: vbmsclient
+      environment:
+        audience: https://services.vbms.aide.oit.va.gov/
+        issuer: https://services.vbms.aide.oit.va.gov/
+        recipient: https://vefs.client.vbms.aide.oit.va.gov/
+        nameId: VEFS
+        maxSessionTimeoutInMinutes: 5
+  security:
+    policy:
+      service:
+        uri: https://bss-dev.dev.bip.va.gov/security-policy-service/v1
+        #uri: https://localhost:8200/security-policy-service/v1
+      security.user:
+        name: policyUser
+        password: policyPassword
+  claimevidence:
+    jsonfilter:
+      issuers:
+        - https://bss-dev.dev8.bip.va.gov/auth/realms/idp
+      audiences:
+        bip-vefs-claimevidence-ui-dev: ClaimEvidenceUI
+        bip-vefs-claimevidence-ui-local: ClaimEvidenceUI
+    claimAttributesService:
+      enabled: true
+    module:
+      getFileData:
+        attachRawTextData: true
+      upload:
+        saveRawTextData: true
+      savedFileQueries:
+        enabled: true
+      search:
+        security:
+          skipChildDocsEnabled: true
+    duplicateInformation:
+      enabled: true
+    noEvidentiaryValue:
+      enabled: true
+      getFileData: true
+      updateData: true
+    archiveIndicator:
+      enabled: true
+external:
+  claimsApi:
+    baseUrl: https://claims-test.dev.bip.va.gov/api/v1/
+    secret: oADHbhK8gH*VyvG
+  veteranApi:
+    baseUrl: https://veteran-api-dev.dev.bip.va.gov
+    secret: ZI6AAkA3odhInay570SQv2mg0RXZJLmE
+  participantApi:
+    baseUrl: https://participant-api-dev.dev.bip.va.gov
+    issuer: ClaimEvidenceApi
+    secret: secret
+  folderNoteMigration:
+    baseUrl: http://localhost:8080/api/v1/rest/
+    secret: A90E153DCB4614EF2B0E57E357B89504
+    issuer: CE_MIGRATION
+validation:
+  dateVaReceivedDocument:
+    future:
+      issuers: DocGen, vefs
+    extendedFuture:
+      issuers: ADG
+      dayLimit: 30
+logging:
+  level:
+    gov.va.bip.vefs.provider.plugin.claimevidence.utils.LoggerUtil: TRACE
+    gov.va.bip.vefs.provider.plugin.claimevidence.cache.MultiLevelCacheInterceptor: TRACE
